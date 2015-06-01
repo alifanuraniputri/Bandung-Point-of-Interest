@@ -13,22 +13,27 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
-    </ion-header-bar>
-    <ion-content>
+    <ion-content style="background: url('../img/menu-bg.png') no-repeat;">
+      <div class="item item-avatar profile-preview">
+        <img class="profile-picture" src="img/user/alifa.jpg">
+        <h2>Alifa Nurani Putri</h2>
+        <p><a style="text-decoration: none;"  class="link" href="#/login" href menu-close>Logout</a></p>
+    </div>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+        <ion-item menu-close href="#/app/findPOI">
+          <div class="text-menu"> <i class="fa fa-map-marker fa-fw"></i>&nbsp; <strong> Find POI </strong></div>
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
+        <ion-item menu-close href="#/app/public">
+           <div class="text-menu"><i class="fa fa-bookmark fa-fw"></i>&nbsp; <strong> Public Interest </strong></div>
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
+        <ion-item menu-close href="#/app/checkin">
+           <div class="text-menu"><i class="fa fa-check-circle fa-fw"></i>&nbsp; <strong> Check In & Rate </strong></div>
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item menu-close href="\">
+           <div class="text-menu"><i class="fa fa-history fa-fw"></i>&nbsp; <strong> History </strong></div>
+        </ion-item>
+        <ion-item menu-close href="#/app/about">
+           <div class="text-menu"><i class="fa fa-flag fa-fw"></i>&nbsp; <strong> About </strong></div>
         </ion-item>
       </ion-list>
     </ion-content>

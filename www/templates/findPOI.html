@@ -1,0 +1,23 @@
+<ion-view view-title="FIND POINT OF INTEREST">
+  <ion-content>
+
+    <div  class="map-content">
+    	<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" id="full-map" bounds="map.bounds">
+    	<ui-gmap-circle ng-repeat="c in circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
+                visible="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable" control="c.control">
+        </ui-gmap-circle>
+         <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+    </div>
+    <div class="title-banner">
+  		<div class="hint-map"> 
+  			select the radius, then find
+  		</div>
+  		<button class="button button-block find " ng-click=""><div class="text-white"><i class="fa fa-search fa-fw"></i>&nbsp;  <strong>Find</strong></div></button>
+    </div>
+    
+  </ion-content>
+</ion-view>
+
+

@@ -1,1 +1,147 @@
 /* Empty. Add your own CSS if you like */
+
+/* font */
+@font-face {
+    font-family: roboto-lt;
+    src: url(../fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: roboto-black;
+    src: url(../fonts/Roboto-Black.ttf);
+}
+@font-face {
+    font-family: roboto;
+    src: url(../fonts/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: roboto-thin;
+    src: url(../fonts/Roboto-Thin.ttf);
+}
+
+.full-overlay {
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    position: fixed;
+    color: #27ae60;
+    background: url('../img/back.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.login-page {
+	
+	width: 100%;
+	height: 100% !important;
+}
+
+.login-page .button {
+	border-width:0px;
+}
+
+.login-page .migme {
+	background-color: #d45800;
+	font-family: roboto;
+}
+
+.login-page {
+    padding: 20px;
+    padding-top: 80px;
+}
+
+.login-page .logo {
+	background: url('../img/logo-text.png') center center no-repeat;
+    background-size: contain;
+	width: 120px;
+	height: 150px;
+	margin: 0 auto;
+}
+
+.login-page .guest {
+	margin-top: 125px;
+}
+
+.title-banner {
+    background-color: #fff;
+    height: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.hint {
+	color: #fff;
+	font-family: roboto-thin;
+	text-align: center;
+	font-size:18px;
+	
+}
+
+.hint-map {
+	color: #666666;
+	font-family: roboto-thin;
+	text-align: left;
+	font-size:16px;
+	
+}
+
+.text-menu {
+	color: #000;
+	font-family: roboto-thin;
+	text-align: left;
+	font-size:16px;
+	
+}
+
+.text-white {
+	color: #fff;
+	font-family: roboto-thin;
+	text-align: center;
+	font-size:16px;
+	
+}
+
+.nav-main {
+	font-family: roboto-thin;
+}
+
+.profile-preview {
+	background: url('../img/side-bg.png') no-repeat;
+	background-size:cover;
+	height: 60px;
+}
+/*override*/
+.item-avatar > img:first-child {
+	border-radius:60%;
+}
+
+.profile-preview > h2{
+	color:#fff;
+	font-family: roboto-lt;
+}
+
+/* MAP */
+
+.angular-google-map-container { height: 400px; }
+
+#full-map .angular-google-map-container{
+  height: 75vh;
+}
+
+#small-map .angular-google-map-container{
+  height: 150px;
+}
+
+#small-map2 .angular-google-map-container{
+  height: 150px;
+  margin-top: -10px;
+}
+
+.find {
+	background: url('../img/side-bg.png') no-repeat;
+	background-size:cover;
+	font-family: roboto;
+
+}
