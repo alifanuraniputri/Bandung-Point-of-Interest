@@ -107,6 +107,16 @@
 	font-family: roboto-thin;
 }
 
+.location {
+	font-family: roboto-light;
+	font-size:22px;
+}
+
+.public {
+	font-family: roboto-thin;
+	font-size:18px;
+}
+
 .profile-preview {
 	background: url('../img/side-bg.png') no-repeat;
 	background-size:cover;
@@ -131,7 +141,7 @@
 }
 
 #small-map .angular-google-map-container{
-  height: 150px;
+  height: 170px;
 }
 
 #small-map2 .angular-google-map-container{
@@ -144,4 +154,40 @@
 	background-size:cover;
 	font-family: roboto;
 
+}
+
+
+/* Check IN*/
+.checkin-page {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* HISTORY */
+.hint-history{
+	font-family: roboto-thin;
+	text-align: center;
+	font-size:18px;
+	
+}
+
+.rating {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+.rating li {
+  padding: 1px;
+  color: #ddd;
+  font-size: 20px;
+  text-shadow: .05em .05em #aaa;
+  list-style-type: none;
+  display: inline-block;
+  cursor: pointer;
+}
+.rating li.filled {
+  color: #fd0;
+}
+.rating.readonly li.filled {
+  color: #666;
 }

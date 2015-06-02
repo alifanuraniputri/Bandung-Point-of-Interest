@@ -1,0 +1,56 @@
+<ion-view view-title="LOCATION LOOK-UP">
+  <ion-content>
+    <div class="list"> 
+      <a class="item item-thumbnail-left item-text-wrap" href="#">
+          <img src="../img/location/1.jpg">
+          <br>
+          <i class="location">Alun Alun</i>
+          <p><i class="fa fa-map-marker fa-fw"></i> Taman</p>
+          <p>Jalan Asia Afrika, Bandung 40251 </p>
+      </a>
+      <a class="item item-divider item-positive" href="#">
+          <strong class="public"> Popularity </strong>
+      </a>
+      <a class="item item-large item-light item-button-left" href="#">
+          <button class="button button-positive button-outline">33%</button>
+          <p> &nbsp; &nbsp; #1 popular from 18 Taman</p>
+      </a>
+      <a class="item item-divider item-calm" href="#">
+          <strong class="public"> Rate </strong>
+      </a>
+      <a class="item item-large item-light item-button-left" href="#">
+          <button class="button button-calm button-outline">4.70</button>
+          <p>&nbsp; &nbsp; #1 best for Taman </p>
+          <div class="row">
+            <div class="col"> <p> Keramaian </p></div>
+            <div class="col"> <div star-rating ng-model="rating1" readonly="isReadonly" ="5" on-rating-selected=""></div> </div>
+          </div>
+          <div class="row">
+            <div class="col"> <p> Kebersihan </p></div>
+            <div class="col"> <div star-rating ng-model="rating2" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
+          </div>
+          <div class="row">
+            <div class="col"> <p> Fasilitas </p></div>
+            <div class="col"> <div star-rating ng-model="rating3" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
+          </div>
+          <div class="row">
+            <div class="col"> <p> Wifi </p></div>
+            <div class="col"> <div star-rating ng-model="rating4" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
+          </div>
+          <div class="row">
+            <div class="col"> <p> Untuk Anak </p></div>
+            <div class="col"> <div star-rating ng-model="rating5" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
+          </div>
+      </a>
+      <a class="item item-divider item-balanced" href="#">
+          <strong class="public"> Issue </strong>
+      </a>
+      <a class="item item-large item-light" href="#">
+          <p><i class="public "> <strong class="balanced">#1</strong> senang</i> <span class="balanced"> (120 hits) </span> </p>
+          <p><i class="public "> <strong class="balanced">#2</strong> rumput</i> <span class="balanced"> (54 hits) </span> </p>
+          <p><i class="public "> <strong class="balanced">#3</strong> good</i> <span class="balanced"> (30 hits) </span> </p>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>
+

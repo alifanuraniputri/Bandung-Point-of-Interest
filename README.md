@@ -19,3 +19,8 @@ This is a hybrid ionic mobile apps. Show public places around Bandung, Indonesia
 
 
 Created by Ricardo Moreira from the noun project
+Created by useiconic.com from the noun project
+By yoni david, IL user
+
+
+http://cdn-2.tstatic.net/tribunnews/foto/bank/images/taman-bandung_20141224_200848.jpg

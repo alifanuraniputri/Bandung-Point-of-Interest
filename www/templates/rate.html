@@ -1,0 +1,53 @@
+<ion-view view-title="CHECK IN & RATE">
+  <ion-content>
+
+  <div class="list"> 
+      <a class="item item-thumbnail-left item-text-wrap" href="#">
+          <img src="../img/location/1.jpg">
+          <br>
+          <i class="location">Alun Alun</i>
+          <p><i class="fa fa-map-marker fa-fw"></i> Taman</p>
+          <p>Jalan Asia Afrika, Bandung 40251 </p>
+      </a>
+      <a class="item">
+      	<div class="row">
+		  <div class="col"> Overall</div>
+		  <div class="col"> <div star-rating ng-model="ratingAll" max="5" on-rating-selected=""></div> </div>
+		</div>
+      </a>
+      <a class="item">
+      	<div class="row">
+		  <div class="col"> Keramaian</div>
+		  <div class="col"> <div star-rating ng-model="rating1" max="5" on-rating-selected=""></div> </div>
+		</div>
+		<div class="row">
+		  <div class="col"> Kebersihan</div>
+		  <div class="col"> <div star-rating ng-model="rating2" max="5" on-rating-selected=""></div> </div>
+		</div>
+		<div class="row">
+		  <div class="col"> Fasilitas</div>
+		  <div class="col"> <div star-rating ng-model="rating3" max="5" on-rating-selected=""></div> </div>
+		</div>
+		<div class="row">
+		  <div class="col"> Wifi</div>
+		  <div class="col"> <div star-rating ng-model="rating4" max="5" on-rating-selected=""></div> </div>
+		</div>
+		<div class="row">
+		  <div class="col"> Untuk Anak</div>
+		  <div class="col"> <div star-rating ng-model="rating5" max="5" on-rating-selected=""></div> </div>
+		</div>
+      </a>
+   </div>
+
+  	<div class="checkin-page">
+      <button class="button button-block button-positive" ng-click="rateFunction()">
+        Check In & Rate
+      </button> 
+      <button class="button button-block button-outline button-positive" ng-click="">
+        Check In Only
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
+
+

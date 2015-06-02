@@ -8,6 +8,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+
   
   // Form data for the login modal
   $scope.loginData = {};
@@ -55,26 +56,78 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('Publictrl', function($scope) {
   })
 
-.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi) {
-   $scope.map = { center: { latitude: -6.898438, longitude: 107.60779}, zoom: 13, bounds: {} };
+.controller("RateCtrl", function($state, $scope, $ionicPopup) {
+  $scope.ratingAll = 0.1;
+  $scope.rating1 = 0.1;
+  $scope.rating2 = 0.1;
+  $scope.rating3 = 0.1;
+  $scope.rating4 = 0.1;
+  $scope.rating5 = 0.1;
+  $scope.rateFunction = function() {
+    var alertPopup = $ionicPopup.alert({
+                title: 'Rating Submitted!',
+            });
+    alertPopup.then(function(res) {
+      $state.go('app.history');
+     });
+  };
 
+})
+
+.controller("LocationCtrl", function($state, $scope, $ionicPopup) {
+  $scope.rating1 = 3;
+  $scope.rating2 = 43;
+  $scope.rating3 = 4;
+  $scope.rating4 = 4;
+  $scope.rating5 = 5;
+  $scope.isReadonly = true;
+})
+
+.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state) {
+
+  $scope.find = function() {
+    $scope.marker.options.visible=true;
+    
+  };
+  
+  $scope.map = { center: { latitude: -6.921783191, longitude: 107.6071358}, zoom: 14, bounds: {} };
+
+  //$scope.markers = { };
+
+  $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: -6.921783191,
+        longitude: 107.6071358
+      },
+      options: { draggable: false,
+        visible:false,
+        labelContent: "Alun Alun",
+            labelAnchor: "20 0",
+            labelClass: "marker-labels"},
+      events: {
+        click: function () {
+          $state.go('app.location',{locationId:3});
+        }
+      },
+    };
 
   $scope.circles = [
     {
       id: 1,
       center: {
-          latitude: -6.898438,
-          longitude: 107.60779
+          latitude: -6.921783191,
+          longitude: 107.6071358
       },
-      radius: 3000,
+      radius: 1300,
       stroke: {
           color: '#07D5DC',
           weight: 1,
           opacity: 1
       },
       fill: {
-          color: '#07D5DC',
-          opacity: 0.2
+          color: '#fff',
+          opacity: 0.5
       },
       geodesic: true, // optional: defaults to false
       draggable: true, // optional: defaults to false
@@ -105,6 +158,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     ret[idKey] = i;
     return ret;
   };
+
   $scope.randomMarkers = [];
   // Get the bounds from the map once it's loaded
   $scope.$watch(function() {
@@ -117,19 +171,48 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
         markers.push(createRandomMarker(i, $scope.map.bounds))
       }
       $scope.randomMarkers = markers;
+      
     }
   }, true);
 
- 
+})
 
-  uiGmapGoogleMapApi.then(function(maps) {
-    $timeout(function() {
-      console.log('loaded');
-      $ionicLoading.hide();  
-    }, 2000);
-  });
+
+.controller('CheckinCtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state) {
+  
+  $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 14, bounds: {} };
+
+  $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: -6.921783191,
+        longitude: 107.6071358
+      },
+      options: { draggable: false,
+        labelContent: "Alun Alun",
+            labelAnchor: "20 0",
+            labelClass: "marker-labels"},
+      events: {
+        click: function () {
+          $state.go('app.location',{locationId:3});
+        }
+      },
+    };
+
+    $scope.mylocation = {
+      id: 0,
+      coords: {
+        latitude: -6.924783191,
+        longitude: 107.6091358
+      },
+      options: { draggable: false,
+        labelContent: "My Location",
+            labelAnchor: "20 0",
+            labelClass: "marker-labels"},
+    };
 
 })
+
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })

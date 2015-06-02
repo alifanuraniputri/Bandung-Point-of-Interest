@@ -20,6 +20,45 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
+.directive("starRating", function() {
+  return {
+    restrict : "EA",
+    template : "<ul class='rating' ng-class='{readonly: readonly}'>" +
+               "  <li ng-repeat='star in stars' ng-class='star' ng-click='toggle($index)'>" +
+               "    <i class='fa fa-star'></i>" + //&#9733
+               "  </li>" +
+               "</ul>",
+    scope : {
+      ratingValue : "=ngModel",
+      max : "=?", //optional: default is 5
+      onRatingSelected : "&?",
+      readonly: "=?"
+    },
+    link : function(scope, elem, attrs) {
+      if (scope.max == undefined) { scope.max = 5; }
+      function updateStars() {
+        scope.stars = [];
+        for (var i = 0; i < scope.max; i++) {
+          scope.stars.push({
+            filled : i < scope.ratingValue
+          });
+        }
+      };
+      scope.toggle = function(index) {
+        if (scope.readonly == undefined || scope.readonly == false){
+          scope.ratingValue = index + 1;
+          scope.onRatingSelected({
+            rating: index + 1
+          });
+        }
+      };
+      scope.$watch("ratingValue", function(oldVal, newVal) {
+        if (newVal) { updateStars(); }
+      });
+    }
+  };
+})
+
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     //    key: 'your api key',
@@ -54,11 +93,56 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('app.public', {
-    url: "/public",
+  .state('app.stat', {
+    url: "/stat",
     views: {
       'menuContent': {
-        templateUrl: "templates/public.html",
+        templateUrl: "templates/stat.html",
+      }
+    }
+  })
+
+  .state('app.popularLoc', {
+    url: "/popularloc",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/popularloc.html",
+      }
+    }
+  })
+
+  .state('app.bestrateLoc', {
+    url: "/bestrateloc",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/bestrateloc.html",
+      }
+    }
+  })
+
+  .state('app.popularIssue', {
+    url: "/popularissue",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/popularissue.html",
+      }
+    }
+  })
+
+  .state('app.history', {
+    url: "/history",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/history.html",
+      }
+    }
+  })
+
+  .state('app.about', {
+    url: "/about",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/about.html",
       }
     }
   })
@@ -67,7 +151,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: "/checkin",
     views: {
       'menuContent': {
-        templateUrl: "templates/checkin.html"
+        templateUrl: "templates/checkin.html",
+        controller: 'CheckinCtrl'
+      }
+    }
+  })
+
+  .state('app.rate', {
+    url: "/rate/:locationId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/rate.html",
+        controller: 'RateCtrl'
+      }
+    }
+  })
+
+  .state('app.location', {
+    url: "/location/:locationId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/location.html",
+        controller: 'LocationCtrl'
       }
     }
   })
