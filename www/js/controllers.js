@@ -104,7 +104,8 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
         visible:false,
         labelContent: "Alun Alun",
             labelAnchor: "20 0",
-            labelClass: "marker-labels"},
+            labelClass: "marker-labels",
+            icon: {url: "./img/marker.png" },},
       events: {
         click: function () {
           $state.go('app.location',{locationId:3});
@@ -191,7 +192,8 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
       options: { draggable: false,
         labelContent: "Alun Alun",
             labelAnchor: "20 0",
-            labelClass: "marker-labels"},
+            labelClass: "marker-labels",
+            icon: {url: "./img/marker.png" },},
       events: {
         click: function () {
           $state.go('app.location',{locationId:3});
@@ -208,7 +210,8 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
       options: { draggable: false,
         labelContent: "My Location",
             labelAnchor: "20 0",
-            labelClass: "marker-labels"},
+            labelClass: "marker-labels",
+           icon: {url: "./img/mylocation.png" },},
     };
 
 })

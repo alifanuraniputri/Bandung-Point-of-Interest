@@ -5,9 +5,9 @@
         <ui-gmap-circle ng-repeat="c in circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
                   visible="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable" control="c.control">
           </ui-gmap-circle>
-          <ui-gmap-marker coords="marker.coords" icon= '{url: "../img/marker.png" }' options="marker.options" events="marker.events" idkey="marker.id">
+          <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
           </ui-gmap-marker>
-          <ui-gmap-marker coords="mylocation.coords" icon= '{url: "../img/mylocation.png" }' options="mylocation.options" events="mylocation.events" idkey="mylocation.id">
+          <ui-gmap-marker coords="mylocation.coords" options="mylocation.options" events="mylocation.events" idkey="mylocation.id">
           </ui-gmap-marker>
       </ui-gmap-google-map>
     </div>
