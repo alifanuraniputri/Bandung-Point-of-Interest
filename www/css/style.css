@@ -45,9 +45,14 @@
 	font-family: roboto;
 }
 
+.login-page .fb {
+	background-color: #3b5998;
+	font-family: roboto;
+}
+
 .login-page {
     padding: 20px;
-    padding-top: 80px;
+    padding-top: 70px;
 }
 
 .login-page .logo {
@@ -56,10 +61,11 @@
 	width: 120px;
 	height: 150px;
 	margin: 0 auto;
+	margin-bottom: 20px;
 }
 
 .login-page .guest {
-	margin-top: 125px;
+	margin-top: 115px;
 }
 
 .title-banner {
