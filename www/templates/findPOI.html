@@ -3,15 +3,17 @@
 
     <div  class="map-content" data-tap-disabled="true">
     	<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" id="full-map" bounds="map.bounds">
-    	<ui-gmap-circle ng-repeat="c in circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
-                visible="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable" control="c.control">
+    	<ui-gmap-circle center="circle.center" stroke="circle.stroke" fill="circle.fill" radius="circle.radius"
+                visible="circle.visible" geodesic="circle.geodesic" editable="circle.editable" draggable="circle.draggable" clickable="circle.clickable" control="circle.control"   events='circle.events'>
         </ui-gmap-circle>
-        <!--
-         <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'markers.icon'">
+        <ui-gmap-marker coords="mylocation.coords" options="mylocation.options" events="mylocation.events" idkey="mylocation.id">
+          </ui-gmap-marker>
+        <ui-gmap-markers models="parkMarkers" coords="'self'" options="'self'"  >
         </ui-gmap-markers>
-      -->
-        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-        </ui-gmap-marker>
+        <ui-gmap-markers models="hospitalMarkers" coords="'self'" options="'self'"  >
+        </ui-gmap-markers>
+        <ui-gmap-markers models="mosqueMarkers" coords="'self'" options="'self'"  >
+        </ui-gmap-markers>
     </ui-gmap-google-map>
     </div>
     <div class="title-banner">

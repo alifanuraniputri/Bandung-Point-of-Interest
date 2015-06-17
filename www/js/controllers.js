@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['uiGmapgoogle-maps'])
+angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   
@@ -83,105 +83,181 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   $scope.isReadonly = true;
 })
 
-.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state) {
+.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation, RestService, ConnService) {
 
-  $scope.find = function() {
-    $scope.marker.options.visible=true;
-    
-  };
-  
-  $scope.map = { center: { latitude: -6.921783191, longitude: 107.6071358}, zoom: 14, bounds: {} };
+    $scope.parks = [];
+    $scope.parkMarkers = [];
+    $scope.hospitals = [];
+    $scope.hospitalMarkers = [];
+    $scope.mosques = [];
+    $scope.mosqueMarkers = [];
+    $scope.circles;
+    $scope.mylat;
+    $scope.mylng;
+    var pmarkersbound = [];
+    var hmarkersbound = [];
+    var mmarkersbound = [];
 
-  //$scope.markers = { };
-
-  $scope.marker = {
+    $scope.mylocation = {
       id: 0,
       coords: {
-        latitude: -6.921783191,
-        longitude: 107.6071358
+        latitude: -6.924783191,
+        longitude: 107.6091358
       },
       options: { draggable: false,
-        visible:false,
-        labelContent: "Alun Alun",
+        labelContent: "My Location",
             labelAnchor: "20 0",
             labelClass: "marker-labels",
-            icon: {url: "./img/marker.png" },},
-      events: {
-        click: function () {
-          $state.go('app.location',{locationId:3});
+           icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(35, 54)},},
+    };
+
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function (position) {
+        //var lat  = position.coords.latitude;
+        //var lng = position.coords.longitude;
+        $scope.mylat  = -6.922783191;
+        $scope.mylng = 107.6081358;
+        $scope.map = {center: {latitude: $scope.mylat, longitude: $scope.mylng }, zoom: 14, bounds: {} };
+        $scope.circle = 
+        {
+          id: 1,
+          center: {
+              latitude: $scope.mylat,
+              longitude: $scope.mylng
+          },
+          radius: 1300,
+          stroke: {
+              color: '#07D5DC',
+              weight: 1,
+              opacity: 1
+          },
+          fill: {
+              color: '#fff',
+              opacity: 0.5
+          },
+          geodesic: true, // optional: defaults to false
+          //draggable: true, // optional: defaults to false
+          clickable: true, // optional: defaults to true
+          editable: true, // optional: defaults to false
+          visible: true, // optional: defaults to true
+          control: {},
+          events:{
+            radius_changed: function(){
+                $scope.parkMarkers = [];  $scope.parkMarkers.length=0;
+                $scope.hospitalMarkers = [];  $scope.hospitalMarkers.length=0;
+                $scope.mosqueMarkers = [];  $scope.mosqueMarkers.length=0;
+                pmarkersbound = []; pmarkersbound.length=0;
+                hmarkersbound = []; hmarkersbound.length=0;
+                mmarkersbound = []; mmarkersbound.length=0;
+
+                //$scope.find();
+            }
+          }
         }
-      },
-    };
+        ;
+        $scope.mylocation.coords.latitude = $scope.mylat;
+        $scope.mylocation.coords.longitude = $scope.mylng;
+    }, function(err) {
+      // error
+      alert('Error fetching position');
+    });
 
-  $scope.circles = [
-    {
-      id: 1,
-      center: {
-          latitude: -6.921783191,
-          longitude: 107.6071358
-      },
-      radius: 1300,
-      stroke: {
-          color: '#07D5DC',
-          weight: 1,
-          opacity: 1
-      },
-      fill: {
-          color: '#fff',
-          opacity: 0.5
-      },
-      geodesic: true, // optional: defaults to false
-      draggable: true, // optional: defaults to false
-      clickable: true, // optional: defaults to true
-      editable: true, // optional: defaults to false
-      visible: true, // optional: defaults to true
-      control: {}
-    }
-  ];
-
-  var createRandomMarker = function(i, bounds, idKey) {
-    var lat_min = bounds.southwest.latitude,
-      lat_range = bounds.northeast.latitude - lat_min,
-      lng_min = bounds.southwest.longitude,
-      lng_range = bounds.northeast.longitude - lng_min;
-
-    if (idKey == null) {
-      idKey = "id";
-    }
-
-    var latitude = lat_min + (Math.random() * lat_range);
-    var longitude = lng_min + (Math.random() * lng_range);
-    var ret = {
-      latitude: latitude,
-      longitude: longitude,
-      title: 'm' + i
-    };
-    ret[idKey] = i;
-    return ret;
-  };
-
-  $scope.randomMarkers = [];
-  // Get the bounds from the map once it's loaded
-  $scope.$watch(function() {
-    return $scope.map.bounds;
-  }, function(nv, ov) {
-    // Only need to regenerate once
-    if (!ov.southwest && nv.southwest) {
-      var markers = [];
-      for (var i = 0; i < 3; i++) {
-        markers.push(createRandomMarker(i, $scope.map.bounds))
+    var createMarker = function(i, scp, img, idKey) {
+     
+      if (idKey == null) {
+        idKey = "id";
       }
-      $scope.randomMarkers = markers;
-      
-    }
-  }, true);
+      var ret = {
+        id: i,
+        latitude: scp[i].lat,
+        longitude:  scp[i].lng,
+        labelContent: scp[i].name,
+        labelAnchor: "20 0",
+        icon:{url: img, scaledSize: new google.maps.Size(30, 44) },
+      };
+      ret[idKey] = i;
+      return ret;
+    };
+
+    $scope.loadParks = function () {
+        RestService.parkList().then( function (data) {
+            $scope.parks = data;
+        }
+    )};
+
+    $scope.loadHospitals = function () {
+        RestService.hospitalList().then( function (data) {
+            $scope.hospitals = data;
+        }
+    )};
+
+    $scope.loadMosques = function () {
+        RestService.mosqueList().then( function (data) {
+            $scope.mosques = data;
+        }
+    )};
+
+
+    var rad = function(x) {
+      return x * Math.PI / 180;
+    };
+
+    var getDistance = function(p1, p2) {
+      var R = 6378137; // Earth’s mean radius in meter
+      var dLat = rad(p2.lat() - p1.lat());
+      var dLong = rad(p2.lng() - p1.lng());
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      return d; // returns the distance in meter
+    };
+
+    $scope.find = function() {
+
+        console.log("scope find");
+
+        var p2 = new google.maps.LatLng($scope.circle.center.latitude, $scope.circle.center.longitude);
+
+        for (var i = 0; i < $scope.parks.length; i++) { 
+            var p1 = new google.maps.LatLng($scope.parks[i].lat, $scope.parks[i].lng);
+            if (getDistance(p1, p2)<$scope.circle.radius) {
+
+                pmarkersbound.push(createMarker(i, $scope.parks, "./img/park.png" ));
+            }
+        }
+        $scope.parkMarkers = pmarkersbound; 
+
+        for (var i = 0; i < $scope.hospitals.length; i++) { 
+            var p1 = new google.maps.LatLng($scope.hospitals[i].lat, $scope.hospitals[i].lng);
+            if (getDistance(p1, p2)<$scope.circle.radius) {
+                hmarkersbound.push(createMarker(i, $scope.hospitals, "./img/hospital.png" ));
+            }
+        }
+        $scope.hospitalMarkers = hmarkersbound; 
+
+        for (var i = 0; i < $scope.mosques.length; i++) { 
+            var p1 = new google.maps.LatLng($scope.mosques[i].lat, $scope.mosques[i].lng);
+            if (getDistance(p1, p2)<$scope.circle.radius) {
+                mmarkersbound.push(createMarker(i, $scope.mosques, "./img/mosque.png" ));
+            }
+        }
+        $scope.mosqueMarkers = mmarkersbound; 
+
+    };
+   
+    $scope.loadParks();
+    $scope.loadHospitals();
+    $scope.loadMosques();
 
 })
 
 
-.controller('CheckinCtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state) {
+.controller('CheckinCtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation) {
   
-  $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 14, bounds: {} };
+  $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 15, bounds: {} };
 
   $scope.marker = {
       id: 0,
@@ -213,6 +289,19 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
             labelClass: "marker-labels",
            icon: {url: "./img/mylocation.png" },},
     };
+
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function (position) {
+      var lat  = position.coords.latitude;
+      var lng = position.coords.longitude;
+      $scope.map = {center: {latitude: lat, longitude: lng }, zoom: 15 };
+      $scope.mylocation.coords.latitude = lat;
+      $scope.mylocation.coords.longitude = lng;
+    }, function(err) {
+      // error
+      alert('Error fetching position');
+    });
 
 })
 

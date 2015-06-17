@@ -6,7 +6,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
@@ -17,8 +16,8 @@
    viewBox="0.8 -1.6 16.0 21.6"
    id="svg2"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="marker.svg"
-   inkscape:export-filename="D:\PROJECT\BandungPOI\www\img\marker.png"
+   sodipodi:docname="park.svg"
+   inkscape:export-filename="D:\PROJECT\BandungPOI\www\img\park.png"
    inkscape:export-xdpi="806.99976"
    inkscape:export-ydpi="806.99976">
   <metadata
@@ -65,15 +64,6 @@
          offset="1"
          id="stop3774" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5284"
-       id="linearGradient3813"
-       x1="2.6921122"
-       y1="9.2712049"
-       x2="13.986477"
-       y2="9.2712049"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -90,7 +80,7 @@
      showgrid="false"
      inkscape:zoom="20.85965"
      inkscape:cx="-5.7656761"
-     inkscape:cy="9.7501529"
+     inkscape:cy="2.079842"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -98,23 +88,46 @@
   <path
      d="m 8.3392946,0.91525424 c -3.1624222,0 -5.6471825,2.29788626 -5.6471825,5.22246896 0,3.9690768 5.6471825,11.4894318 5.6471825,11.4894318 0,0 5.6471824,-7.520355 5.6471824,-11.4894318 0,-2.9245827 -2.48476,-5.22246896 -5.6471824,-5.22246896 z m 0,3.13348136 c 1.2423802,0 -2.1999316,-1.0878898 -2.6385025,3.1029547 -0.1196774,1.1436001 4.100168,-0.7501204 2.8577879,-0.7501204 -1.2423802,0 -2.4781585,0.8850965 -2.4781585,-0.2638467 0,-1.1489432 1.0164929,-2.0889876 2.2588731,-2.0889876 z"
      id="path4"
-     style="fill:url(#linearGradient3813);fill-opacity:1.0"
+     style="fill:#2dae73;fill-opacity:1"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="sscsssssss" />
   <g
-     id="g3829"
-     transform="matrix(0.09116836,0,0,0.09116836,3.8279382,1.7607044)">
-	<path
-   id="path3831"
-   d="M 75.236,65.808 C 74.088,65.085 71.468,63.672 68.634,62.182 L 49.98,77.432 31.34,62.195 c -2.825,1.484 -5.431,2.893 -6.576,3.612 -5.787,3.645 -8.473,10.049 -8.473,18.854 0,8.807 0,10.339 0,10.339 h 67.417 c 0,0 0,-1.532 0,-10.339 0.001,-8.805 -2.685,-15.209 -8.472,-18.853 z"
-   inkscape:connector-curvature="0"
-   style="fill:#ffffff;fill-opacity:1" />
-
-	<path
-   id="path3833"
-   d="m 49.98,63.396 c 16.012,0 28.993,-12.981 28.993,-28.993 0,-16.011 -12.98,-28.993 -28.993,-28.993 -16.012,0 -28.994,12.981 -28.994,28.993 0,16.012 12.982,28.993 28.994,28.993 z M 40.526,22.62 69.395,34.403 c 0,10.723 -8.693,19.415 -19.415,19.415 -10.722,0 -19.414,-8.692 -19.414,-19.415 l 9.96,-11.783 z"
-   inkscape:connector-curvature="0"
-   style="fill:#ffffff;fill-opacity:1" />
-
-</g>
+     id="g3017"
+     transform="matrix(1.35,0,0,1.35,-89.769495,-80.109551)">
+    <g
+       id="g2997">
+      <g
+         id="g2999">
+        <path
+           id="path3001"
+           d="M 10,90 H 50 V 10 H 10 V 90 z M 44,82.003 H 34 v -10 h 10 v 10 z M 44,64 H 34 V 54 H 44 V 64 z M 16.001,26.002 h 10 v -10 h 8 v 10 h 10 v 8 H 34 v 10 h -8 v -10 H 16 v -8 z m 0,27.998 h 10 v 10 h -10 V 54 z m 0,18.003 h 10 v 10 h -10 v -10 z"
+           inkscape:connector-curvature="0"
+           style="fill:#000000" />
+        <path
+           id="path3003"
+           d="m 56.001,90 h 10 V 70 h 14 v 20 h 10 V 46.002 h -34 V 90 z"
+           inkscape:connector-curvature="0"
+           style="fill:#000000" />
+        <path
+           id="path3005"
+           d="M 56.001,36.002 V 40 h 34 v -3.999 h -34 z"
+           inkscape:connector-curvature="0"
+           style="fill:#000000" />
+      </g>
+    </g>
+    <text
+       id="text3007"
+       font-weight="bold"
+       font-size="5px"
+       y="115"
+       x="0"
+       style="font-size:5px;font-weight:bold;fill:#000000;font-family:'\'Helvetica Neue\', Helvetica, Arial-Unicode, Arial, Sans-serif'">Created by Alexey Ivanov</text>
+    <text
+       id="text3009"
+       font-weight="bold"
+       font-size="5px"
+       y="120"
+       x="0"
+       style="font-size:5px;font-weight:bold;fill:#000000;font-family:'\'Helvetica Neue\', Helvetica, Arial-Unicode, Arial, Sans-serif'">from the Noun Project</text>
+  </g>
 </svg>
