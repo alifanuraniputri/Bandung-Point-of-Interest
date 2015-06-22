@@ -98,6 +98,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: "templates/stat.html",
+        controller: 'StatCtrl'
       }
     }
   })
@@ -107,6 +108,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: "templates/popularloc.html",
+        controller: 'PopularCtrl'
       }
     }
   })
@@ -116,6 +118,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: "templates/bestrateloc.html",
+        controller: 'BestRateCtrl'
       }
     }
   })
@@ -125,6 +128,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: "templates/popularissue.html",
+        controller: 'PopularIssueCtrl'
       }
     }
   })

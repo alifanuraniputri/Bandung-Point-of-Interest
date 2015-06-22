@@ -16,10 +16,10 @@
    viewBox="0.8 -1.6 16.0 21.6"
    id="svg2"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="hospital.svg"
-   inkscape:export-filename="D:\PROJECT\BandungPOI\www\img\hospital.png"
-   inkscape:export-xdpi="806.99976"
-   inkscape:export-ydpi="806.99976">
+   sodipodi:docname="hospital-only.svg"
+   inkscape:export-filename="D:\PROJECT\BandungPOI\www\img\hospital-only.png"
+   inkscape:export-xdpi="674.99158"
+   inkscape:export-ydpi="674.99158">
   <metadata
      id="metadata14">
     <rdf:RDF>
@@ -79,43 +79,38 @@
      id="namedview10"
      showgrid="false"
      inkscape:zoom="20.85965"
-     inkscape:cx="-5.7656761"
-     inkscape:cy="2.079842"
+     inkscape:cx="-13.244229"
+     inkscape:cy="-3.6728911"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
-  <path
-     d="m 8.3392946,0.91525424 c -3.1624222,0 -5.6471825,2.29788626 -5.6471825,5.22246896 0,3.9690768 5.6471825,11.4894318 5.6471825,11.4894318 0,0 5.6471824,-7.520355 5.6471824,-11.4894318 0,-2.9245827 -2.48476,-5.22246896 -5.6471824,-5.22246896 z m 0,3.13348136 c 1.2423802,0 -2.1999316,-1.0878898 -2.6385025,3.1029547 -0.1196774,1.1436001 4.100168,-0.7501204 2.8577879,-0.7501204 -1.2423802,0 -2.4781585,0.8850965 -2.4781585,-0.2638467 0,-1.1489432 1.0164929,-2.0889876 2.2588731,-2.0889876 z"
-     id="path4"
-     style="fill:#9e0022;fill-opacity:1"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="sscsssssss" />
+     inkscape:current-layer="g3017" />
   <g
      id="g3017"
-     transform="matrix(0.09163248,0,0,0.09163248,3.7947393,2.0888683)"
-     style="fill:#ffffff;fill-opacity:1">
+     transform="matrix(1.35,0,0,1.35,-89.769495,-80.109551)"
+     style="fill:#9e0022;fill-opacity:1">
     <g
        id="g2997"
-       style="fill:#ffffff;fill-opacity:1">
+       transform="matrix(0.125,0,0,0.125,63.764441,62.905223)"
+       style="fill:#9e0022;fill-opacity:1">
       <g
          id="g2999"
-         style="fill:#ffffff;fill-opacity:1">
+         style="fill:#9e0022;fill-opacity:1">
         <path
            id="path3001"
            d="M 10,90 H 50 V 10 H 10 V 90 z M 44,82.003 H 34 v -10 h 10 v 10 z M 44,64 H 34 V 54 H 44 V 64 z M 16.001,26.002 h 10 v -10 h 8 v 10 h 10 v 8 H 34 v 10 h -8 v -10 H 16 v -8 z m 0,27.998 h 10 v 10 h -10 V 54 z m 0,18.003 h 10 v 10 h -10 v -10 z"
            inkscape:connector-curvature="0"
-           style="fill:#ffffff;fill-opacity:1" />
+           style="fill:#9e0022;fill-opacity:1" />
         <path
            id="path3003"
            d="m 56.001,90 h 10 V 70 h 14 v 20 h 10 V 46.002 h -34 V 90 z"
            inkscape:connector-curvature="0"
-           style="fill:#ffffff;fill-opacity:1" />
+           style="fill:#9e0022;fill-opacity:1" />
         <path
            id="path3005"
            d="M 56.001,36.002 V 40 h 34 v -3.999 h -34 z"
            inkscape:connector-curvature="0"
-           style="fill:#ffffff;fill-opacity:1" />
+           style="fill:#9e0022;fill-opacity:1" />
       </g>
     </g>
   </g>

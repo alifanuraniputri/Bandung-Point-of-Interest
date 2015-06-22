@@ -74,14 +74,96 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 
 })
 
-.controller("LocationCtrl", function($state, $scope, $ionicPopup) {
-  $scope.rating1 = 3;
-  $scope.rating2 = 43;
-  $scope.rating3 = 4;
-  $scope.rating4 = 4;
-  $scope.rating5 = 5;
-  $scope.isReadonly = true;
+.controller("LocationCtrl", function($stateParams, $state, RestService, ConnService, $scope, $ionicPopup ) {
+
+    $scope.loadLocation = function () { 
+        RestService.locationGet($stateParams.locationId).then( function (data) {
+            $scope.location = data;
+        })
+        RestService.locationRankGet($stateParams.locationId).then( function (data) {
+            $scope.rank = data;
+        })
+
+    };
+    $scope.loadLocation();
+    $scope.isReadonly = true;
 })
+
+.controller("StatCtrl", function($state, RestService, ConnService, $scope, $ionicPopup ) {
+
+    $scope.show = {
+        park : true,
+        hospital : true,
+        mosque : true
+    };
+
+    $scope.loadStat = function () { 
+        RestService.popularityList($scope.show.park,$scope.show.hospital,$scope.show.mosque).then( function (data) {
+            $scope.popularity = data;
+        })
+        RestService.bestRatedList($scope.show.park,$scope.show.hospital,$scope.show.mosque).then( function (data) {
+            $scope.bestRated = data;
+        })
+
+    };
+
+    $scope.loadIssue = function () {
+         RestService.issueList().then( function (data) {
+            $scope.issue = data;
+        })
+    }
+
+    $scope.loadIssue();
+    $scope.loadStat();
+
+})
+
+.controller("PopularIssueCtrl", function($state, RestService, ConnService, $scope, $ionicPopup ) {
+
+    $scope.loadIssue = function () {
+         RestService.issueList().then( function (data) {
+            $scope.issue = data;
+        })
+    }
+
+    $scope.loadIssue();
+
+})
+
+
+.controller("PopularCtrl", function($state, RestService, ConnService, $scope, $ionicPopup ) {
+
+    $scope.show = {
+        park : true,
+        hospital : true,
+        mosque : true
+    };
+    $scope.loadStat = function () { 
+        RestService.popularityList($scope.show.park,$scope.show.hospital,$scope.show.mosque).then( function (data) {
+            $scope.popularity = data;
+        })
+    };
+    $scope.loadStat();
+
+})
+
+.controller("BestRateCtrl", function($state, RestService, ConnService, $scope, $ionicPopup ) {
+
+    $scope.show = {
+        park : true,
+        hospital : true,
+        mosque : true
+    };
+    $scope.loadStat = function () { 
+        RestService.bestRatedList($scope.show.park,$scope.show.hospital,$scope.show.mosque).then( function (data) {
+            $scope.bestRated = data;
+        })
+    };
+    $scope.loadStat();
+
+})
+
+
 
 .controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation, RestService, ConnService) {
 
@@ -94,6 +176,11 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
     $scope.circles;
     $scope.mylat;
     $scope.mylng;
+    $scope.show = {
+       park : true,
+       hospital : true,
+       mosque : true
+     };
     var pmarkersbound = [];
     var hmarkersbound = [];
     var mmarkersbound = [];
@@ -108,14 +195,14 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
         labelContent: "My Location",
             labelAnchor: "20 0",
             labelClass: "marker-labels",
-           icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(35, 54)},},
+           icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(30, 44)},},
     };
 
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function (position) {
-        //var lat  = position.coords.latitude;
-        //var lng = position.coords.longitude;
+        //var mylat  = position.coords.latitude;
+        //var mylng = position.coords.longitude;
         $scope.mylat  = -6.922783191;
         $scope.mylng = 107.6081358;
         $scope.map = {center: {latitude: $scope.mylat, longitude: $scope.mylng }, zoom: 14, bounds: {} };
@@ -150,8 +237,6 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
                 pmarkersbound = []; pmarkersbound.length=0;
                 hmarkersbound = []; hmarkersbound.length=0;
                 mmarkersbound = []; mmarkersbound.length=0;
-
-                //$scope.find();
             }
           }
         }
@@ -175,6 +260,11 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
         labelContent: scp[i].name,
         labelAnchor: "20 0",
         icon:{url: img, scaledSize: new google.maps.Size(30, 44) },
+        events: {
+            click: function () {
+              $state.go('app.location',{locationId:301});
+            }
+          },
       };
       ret[idKey] = i;
       return ret;
@@ -217,35 +307,46 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 
     $scope.find = function() {
 
-        console.log("scope find");
+      $scope.parkMarkers = [];  $scope.parkMarkers.length=0;
+      $scope.hospitalMarkers = [];  $scope.hospitalMarkers.length=0;
+      $scope.mosqueMarkers = [];  $scope.mosqueMarkers.length=0;
+      
+       var p2 = new google.maps.LatLng($scope.circle.center.latitude, $scope.circle.center.longitude);
 
-        var p2 = new google.maps.LatLng($scope.circle.center.latitude, $scope.circle.center.longitude);
+      console.log("scope find");
+      if ($scope.show.park) {
+        pmarkersbound = []; pmarkersbound.length=0;
+          for (var i = 0; i < $scope.parks.length; i++) { 
+              var p1 = new google.maps.LatLng($scope.parks[i].lat, $scope.parks[i].lng);
+              if (getDistance(p1, p2)<$scope.circle.radius) {
+                  pmarkersbound.push(createMarker(i, $scope.parks, "./img/park.png" ));
+              }
+          }
+          $scope.parkMarkers = pmarkersbound; 
+      }
 
-        for (var i = 0; i < $scope.parks.length; i++) { 
-            var p1 = new google.maps.LatLng($scope.parks[i].lat, $scope.parks[i].lng);
-            if (getDistance(p1, p2)<$scope.circle.radius) {
-
-                pmarkersbound.push(createMarker(i, $scope.parks, "./img/park.png" ));
-            }
-        }
-        $scope.parkMarkers = pmarkersbound; 
-
+      if ($scope.show.hospital) {
+         hmarkersbound = []; hmarkersbound.length=0;
         for (var i = 0; i < $scope.hospitals.length; i++) { 
-            var p1 = new google.maps.LatLng($scope.hospitals[i].lat, $scope.hospitals[i].lng);
-            if (getDistance(p1, p2)<$scope.circle.radius) {
-                hmarkersbound.push(createMarker(i, $scope.hospitals, "./img/hospital.png" ));
-            }
-        }
-        $scope.hospitalMarkers = hmarkersbound; 
-
+              var p1 = new google.maps.LatLng($scope.hospitals[i].lat, $scope.hospitals[i].lng);
+              if (getDistance(p1, p2)<$scope.circle.radius) {
+                  hmarkersbound.push(createMarker(i, $scope.hospitals, "./img/hospital.png" ));
+              }
+          }
+          $scope.hospitalMarkers = hmarkersbound;
+      }
+      
+      if ($scope.show.mosque) {
+        mmarkersbound = []; mmarkersbound.length=0;
         for (var i = 0; i < $scope.mosques.length; i++) { 
-            var p1 = new google.maps.LatLng($scope.mosques[i].lat, $scope.mosques[i].lng);
-            if (getDistance(p1, p2)<$scope.circle.radius) {
-                mmarkersbound.push(createMarker(i, $scope.mosques, "./img/mosque.png" ));
-            }
-        }
-        $scope.mosqueMarkers = mmarkersbound; 
-
+              var p1 = new google.maps.LatLng($scope.mosques[i].lat, $scope.mosques[i].lng);
+              if (getDistance(p1, p2)<$scope.circle.radius) {
+                  mmarkersbound.push(createMarker(i, $scope.mosques, "./img/mosque.png" ));
+              }
+          }
+          $scope.mosqueMarkers = mmarkersbound; 
+      }
+       
     };
    
     $scope.loadParks();
@@ -259,23 +360,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
   
   $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 15, bounds: {} };
 
-  $scope.marker = {
-      id: 0,
-      coords: {
-        latitude: -6.921783191,
-        longitude: 107.6071358
-      },
-      options: { draggable: false,
-        labelContent: "Alun Alun",
-            labelAnchor: "20 0",
-            labelClass: "marker-labels",
-            icon: {url: "./img/marker.png" },},
-      events: {
-        click: function () {
-          $state.go('app.location',{locationId:3});
-        }
-      },
-    };
+
 
     $scope.mylocation = {
       id: 0,
@@ -287,14 +372,14 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
         labelContent: "My Location",
             labelAnchor: "20 0",
             labelClass: "marker-labels",
-           icon: {url: "./img/mylocation.png" },},
+           icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(30, 44)},},
     };
 
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function (position) {
-      var lat  = position.coords.latitude;
-      var lng = position.coords.longitude;
+      //var lat  = position.coords.latitude;
+      //var lng = position.coords.longitude;
       $scope.map = {center: {latitude: lat, longitude: lng }, zoom: 15 };
       $scope.mylocation.coords.latitude = lat;
       $scope.mylocation.coords.longitude = lng;
@@ -303,10 +388,6 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
       alert('Error fetching position');
     });
 
-})
-
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .controller("loginFBCtrl", function($scope, $rootScope, $firebase, $firebaseSimpleLogin) {

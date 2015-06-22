@@ -1,5 +1,11 @@
 <ion-view view-title="STATISTICS">
   <ion-content>
+    <div class="button-bar" >         
+
+        <ion-checkbox class="check-find" ng-model="show.park" ng-click="loadStat()"><img class="icon-find" src="img/park-only.png">  </ion-checkbox>
+        <ion-checkbox class="check-find" ng-model="show.hospital" ng-click="loadStat()"> <img class="icon-find" src="img/hospital-only.png">  </ion-checkbox>
+        <ion-checkbox class="check-find" ng-model="show.mosque" ng-click="loadStat()"> <img class="icon-find" src="img/mosque-only.png">   </ion-checkbox>
+    </div>
     <div class="list">
 
       <div class="item item-large item-positive item-button-right">
@@ -8,14 +14,14 @@
         <i class="fa fa-search"></i>
         </a>
       </div>
-      <a class="item" href="#/app/location/1">
-        <i class="positive">  33%   </i >&nbsp; Alun - Alun
+      <a class="item" href="#/app/location/{{popularity[0].id}}">
+        <i class="positive">  {{popularity[0].popularity}}   </i >&nbsp; {{popularity[0].name}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="positive">   18%  </i > &nbsp Taman Lansia
+      <a class="item" href="#/app/location/{{popularity[1].id}}">
+        <i class="positive">   {{popularity[1].popularity}}   </i > &nbsp {{popularity[1].name}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="positive">  10%  </i > &nbsp Taman Jomblo
+      <a class="item" href="#/app/location/{{popularity[2].id}}">
+        <i class="positive">  {{popularity[2].popularity}}   </i > &nbsp {{popularity[2].name}}
       </a>
       <div class="item item-large item-calm item-button-right">
         <i class="fa fa-star fa-fw"></i>&nbsp;  <strong> Best Rate Location</strong>
@@ -23,14 +29,14 @@
         <i class="fa fa-search"></i>
         </a>
       </div>
-      <a class="item" href="#/app/location/1">
-        <i class="calm"> 4.7 </i >&nbsp; Alun - Alun
+      <a class="item" href="#/app/location/{{bestRated[0].id}}">
+        <i class="calm"> {{bestRated[0].rate}} </i >&nbsp; {{bestRated[0].name}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="calm"> 4.3 </i >&nbsp; Taman Hutan Raya
+      <a class="item" href="#/app/location/{{bestRated[1].id}}">
+        <i class="calm"> {{bestRated[1].rate}} </i >&nbsp; {{bestRated[1].name}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="calm"> 4.0 </i >&nbsp; Taman Film
+      <a class="item" href="#/app/location/{{bestRated[2].id}}">
+        <i class="calm"> {{bestRated[2].rate}} </i >&nbsp; {{bestRated[2].name}}
       </a>
       <div class="item item-large item-balanced item-button-right">
         <i class="fa fa-comment fa-fw"></i>&nbsp;  <strong> Popular Issue </strong>
@@ -38,14 +44,14 @@
         <i class="fa fa-search"></i>
         </a>
       </div>
-      <a class="item" href="#/app/location/1">
-        <i class="balanced"> 20% </i >&nbsp; Malming
+      <a class="item" >
+        <i class="balanced"> {{issue[0].hits}} hits</i >&nbsp; {{issue[0].word}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="balanced"> 13% </i >&nbsp; Begal
+      <a class="item" >
+        <i class="balanced"> {{issue[1].hits}} hits</i >&nbsp; {{issue[1].word}}
       </a>
-      <a class="item" href="#/app/location/1">
-        <i class="balanced"> 13% </i >&nbsp; Ridwan Kamil
+      <a class="item" >
+        <i class="balanced"> {{issue[2].hits}} hits </i >&nbsp; {{issue[2].word}}
       </a>
     </div>
   </ion-content>

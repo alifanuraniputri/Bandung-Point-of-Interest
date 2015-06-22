@@ -90,6 +90,7 @@
 	font-family: roboto-thin;
 	text-align: left;
 	font-size:16px;
+	margin-bottom: 5px;
 	
 }
 
@@ -143,7 +144,7 @@
 .angular-google-map-container { height: 400px; }
 
 #full-map .angular-google-map-container{
-  height: 75vh;
+  height: 65vh;
 }
 
 #small-map .angular-google-map-container{
@@ -196,4 +197,14 @@
 }
 .rating.readonly li.filled {
   color: #666;
+}
+
+.icon-find {
+	height: 25px;
+	margin-right: 5px;
+}
+
+.check-find{
+	width: 34%;
+	height: 55px;
 }

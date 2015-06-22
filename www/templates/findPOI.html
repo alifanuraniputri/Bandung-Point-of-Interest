@@ -8,11 +8,11 @@
         </ui-gmap-circle>
         <ui-gmap-marker coords="mylocation.coords" options="mylocation.options" events="mylocation.events" idkey="mylocation.id">
           </ui-gmap-marker>
-        <ui-gmap-markers models="parkMarkers" coords="'self'" options="'self'"  >
+        <ui-gmap-markers models="parkMarkers" coords="'self'" options="'self'"  events="'self'" >
         </ui-gmap-markers>
-        <ui-gmap-markers models="hospitalMarkers" coords="'self'" options="'self'"  >
+        <ui-gmap-markers models="hospitalMarkers" coords="'self'" options="'self'" events="'self'" >
         </ui-gmap-markers>
-        <ui-gmap-markers models="mosqueMarkers" coords="'self'" options="'self'"  >
+        <ui-gmap-markers models="mosqueMarkers" coords="'self'" options="'self'" events="'self'"  >
         </ui-gmap-markers>
     </ui-gmap-google-map>
     </div>
@@ -20,6 +20,12 @@
   		<div class="hint-map"> 
   			select the radius, then find
   		</div>
+        <div class="button-bar" >         
+
+            <ion-checkbox class="check-find" ng-model="show.park" ng-click="find()"><img class="icon-find" src="img/park-only.png">  Park </ion-checkbox>
+            <ion-checkbox class="check-find" ng-model="show.hospital" ng-click="find()"> <img class="icon-find" src="img/hospital-only.png"> Hospital </ion-checkbox>
+            <ion-checkbox class="check-find" ng-model="show.mosque" ng-click="find()"> <img class="icon-find" src="img/mosque-only.png">  Mosque </ion-checkbox>
+        </div>
   		<button class="button button-block find " ng-click="find()"><div class="text-white"><i class="fa fa-search fa-fw"></i>&nbsp;  <strong>Find</strong></div></button>
     </div>
     

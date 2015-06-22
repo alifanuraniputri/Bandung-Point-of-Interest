@@ -36,13 +36,24 @@ angular.module('starter.services', [])
     var REST_URL = 'http://192.168.1.103:8080/bandung-poi-api/';
     var URL = {
                'LOCATION_LIST' : REST_URL + 'location/list',
+               'LOCATION_GET' : REST_URL + 'location/',
+               'LOCATION_RANK_GET' : REST_URL + 'location/rank/',
                'PARK_LIST' : REST_URL + 'location/listByCategory?categoryId=300',
                'HOSPITAL_LIST' : REST_URL + 'location/listByCategory?categoryId=3',
                'MOSQUE_LIST' : REST_URL + 'location/listByCategory?categoryId=2',
+               'POPULARITY_LIST' : REST_URL + 'location/popular',
+               'BEST_RATED_LIST' : REST_URL + 'location/bestRated',
+               'ISSUE_LIST' : REST_URL + 'location/issue',
             };
     return {
         locationList : function() {
             return ConnService.processPromise($http.get(URL['LOCATION_LIST']));
+        },
+        locationGet : function(id) {
+            return ConnService.processPromise($http.get(URL['LOCATION_GET'] + id));
+        },
+        locationRankGet : function(id) {
+            return ConnService.processPromise($http.get(URL['LOCATION_RANK_GET'] + id));
         },
         parkList : function() {
             return ConnService.processPromise($http.get(URL['PARK_LIST']));
@@ -52,6 +63,15 @@ angular.module('starter.services', [])
         },
         mosqueList : function() {
             return ConnService.processPromise($http.get(URL['MOSQUE_LIST']));
+        },
+        popularityList : function(park,hospital,mosque) {
+            return ConnService.processPromise($http.get(URL['POPULARITY_LIST']+'?park='+park+'&hospital='+hospital+'&mosque='+mosque));
+        },
+        bestRatedList : function(park,hospital,mosque) {
+            return ConnService.processPromise($http.get(URL['BEST_RATED_LIST']+'?park='+park+'&hospital='+hospital+'&mosque='+mosque));
+        },
+        issueList : function() {
+            return ConnService.processPromise($http.get(URL['ISSUE_LIST']));
         },
     };
 })
