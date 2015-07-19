@@ -6,6 +6,6 @@ angular.module('starter')
 })
  
 .constant('USER_ROLES', {
-  admin: 'admin_role',
-  public: 'public_role'
+  registered: 'registerd_role',
+  guest: 'guest_role'
 });

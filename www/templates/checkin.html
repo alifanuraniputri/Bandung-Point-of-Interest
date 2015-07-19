@@ -13,26 +13,11 @@
         <input type="text" placeholder="Search">
       </label>
     </div>
-    <div class="list ">
-      <a class="item item-icon-left" href="#/app/rate/1">
-        <h2> <i class="icon ion-ios-location"></i> Alun Alun</h2>
-        <p>500 m</p>
-      </a>
-      <a class="item item-icon-left" href="#/app/rate/1">
-        <h2> <i class="icon ion-ios-location"></i> Taman Lalu Lintas</h2>
-        <p>1.1 km</p>
-      </a>
-      <a class="item item-icon-left" href="#/app/rate/1">
-        <h2> <i class="icon ion-ios-location"></i> Taman Lansia</h2>
-        <p>3.2 km</p>
-      </a>
-      <a class="item item-icon-left" href="#/app/rate/1">
-        <h2> <i class="icon ion-ios-location"></i> Taman Hutan Raya</h2>
-        <p>1.8 km</p>
-      </a>
-      <a class="item item-icon-left" href="#/app/rate/1">
-        <h2> <i class="icon ion-ios-location"></i> Taman Super Hero</h2>
-        <p>3 km</p>
+    <div ng-repeat="location in locations | orderBy:'distance'">
+      <a class="item item-icon-left" href="#/app/rate/{{location.id}}">
+        <h2> <i class="icon ion-ios-location"></i> {{location.name}}</h2>
+        <p ng-show="location.distance < 1000">{{location.distance}} m</p>
+        <p ng-show="location.distance >= 1000">{{location.distance/1000}} km</p>
       </a>
     </div>
 

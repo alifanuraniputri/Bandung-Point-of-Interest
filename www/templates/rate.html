@@ -5,9 +5,9 @@
       <a class="item item-thumbnail-left item-text-wrap" href="#">
           <img src="./img/location/1.jpg">
           <br>
-          <i class="location">Alun Alun</i>
-          <p><i class="fa fa-map-marker fa-fw"></i> Taman</p>
-          <p>Jalan Asia Afrika, Bandung 40251 </p>
+          <i class="location">{{location.name}} </i>
+          <p><i class="fa fa-map-marker fa-fw"></i> {{location.category.name}}</p>
+          <p>{{location.description}}</p>
       </a>
       <a class="item">
       	<div class="row">
@@ -40,10 +40,10 @@
    </div>
 
   	<div class="checkin-page">
-      <button class="button button-block button-positive" ng-click="rateFunction()">
+      <button class="button button-block button-positive" ng-click="rateFunction(rating1,rating2,rating3,rating4,rating5,ratingAll)">
         Check In & Rate
       </button> 
-      <button class="button button-block button-outline button-positive" ng-click="">
+      <button class="button button-block button-outline button-positive" ng-click="checkinFunction()">
         Check In Only
       </button>
     </div>

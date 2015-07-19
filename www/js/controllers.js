@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($state, $scope, $ionicPopup, $ionicModal, $timeout, AuthService, AUTH_EVENTS) {
   
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,37 +9,44 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  
-  // Form data for the login modal
-  $scope.loginData = {};
+  $scope.logout = function() {
+    AuthService.logout();
+    $scope.user.username='';
+    $scope.user.name='Guest';
+    $scope.user.id='';
+    $state.go('login');
+  };
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
+  $scope.user = {};
+
+  $scope.update = function () {
+    $scope.user.username = AuthService.username();
+    $scope.user.name = AuthService.name();
+    $scope.user.id = AuthService.id();
+  }
+
+  $scope.update();
+
+ 
+  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Unauthorized!',
+      template: 'You are not allowed to access this resource.'
+    });
   });
+ 
+  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+    AuthService.logout();
+    $state.go('login');
+    var alertPopup = $ionicPopup.alert({
+      title: 'Session Lost!',
+      template: 'Sorry, You have to login again.'
+    });
+  });
+ 
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
+  
+  
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -56,20 +63,80 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 .controller('Publictrl', function($scope) {
   })
 
-.controller("RateCtrl", function($state, $scope, $ionicPopup) {
-  $scope.ratingAll = 0.1;
-  $scope.rating1 = 0.1;
-  $scope.rating2 = 0.1;
-  $scope.rating3 = 0.1;
-  $scope.rating4 = 0.1;
-  $scope.rating5 = 0.1;
-  $scope.rateFunction = function() {
-    var alertPopup = $ionicPopup.alert({
-                title: 'Rating Submitted!',
+.controller("RateCtrl", function($state, $stateParams, $scope, $ionicPopup, $ionicHistory, RestService, ConnService, AuthService) {
+
+  $scope.loadLocation = function () { 
+    RestService.locationGet($stateParams.locationId).then( function (data) {
+        $scope.location = data;
+    })
+  };
+  $scope.loadLocation();
+
+  $scope.ratingAll = 1;
+  $scope.rating1 = 1;
+  $scope.rating2 = 1;
+  $scope.rating3 = 1;
+  $scope.rating4 = 1;
+  $scope.rating5 = 1;
+
+  $scope.rateFunction = function(c1,c2,c3,c4,c5,ov) {
+
+    RestService.checkin(AuthService.id(),$stateParams.locationId).then( function (data) {
+       
+    })
+
+    RestService.rating(AuthService.id(),$stateParams.locationId,c1,c2,c3,c4,c5,ov).then( function (data) {
+
+        if (data.user.id==AuthService.id()) {
+          var alertPopup = $ionicPopup.alert({
+              title: 'Rating Submitted!',
+          });
+          alertPopup.then(function(res) {
+            $ionicHistory.nextViewOptions({
+              disableBack: true
             });
-    alertPopup.then(function(res) {
-      $state.go('app.history');
-     });
+            $state.go('app.history', {}, {reload: true});
+           });
+        } else {
+          var alertPopup = $ionicPopup.alert({
+              title: 'Rating Failed!',
+          });
+          alertPopup.then(function(res) {
+            $state.go('app.checkin');
+           });
+        }
+       
+    })
+
+    
+  };
+
+  $scope.checkinFunction = function() {
+
+    RestService.checkin(AuthService.id(),$stateParams.locationId).then( function (data) {
+
+        if (data.user.id==AuthService.id()) {
+          var alertPopup = $ionicPopup.alert({
+              title: 'Checkin Success!',
+          });
+          alertPopup.then(function(res) {
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $state.go('app.history');
+           });
+        } else {
+          var alertPopup = $ionicPopup.alert({
+              title: 'Checkin Failed!',
+          });
+          alertPopup.then(function(res) {
+            $state.go('app.checkin');
+           });
+        }
+       
+    })
+
+    
   };
 
 })
@@ -104,7 +171,6 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
         RestService.bestRatedList($scope.show.park,$scope.show.hospital,$scope.show.mosque).then( function (data) {
             $scope.bestRated = data;
         })
-
     };
 
     $scope.loadIssue = function () {
@@ -165,8 +231,9 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 
 
 
-.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation, RestService, ConnService) {
-
+.controller('FindPOICtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation, RestService, ConnService, AuthService) {
+    //$scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 15, bounds: {} };
+    
     $scope.parks = [];
     $scope.parkMarkers = [];
     $scope.hospitals = [];
@@ -185,26 +252,25 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
     var hmarkersbound = [];
     var mmarkersbound = [];
 
-    $scope.mylocation = {
-      id: 0,
-      coords: {
-        latitude: -6.924783191,
-        longitude: 107.6091358
-      },
-      options: { draggable: false,
-        labelContent: "My Location",
-            labelAnchor: "20 0",
-            labelClass: "marker-labels",
-           icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(30, 44)},},
-    };
-
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function (position) {
-        //var mylat  = position.coords.latitude;
-        //var mylng = position.coords.longitude;
-        $scope.mylat  = -6.922783191;
-        $scope.mylng = 107.6081358;
+      $scope.mylat  = position.coords.latitude;
+      $scope.mylng = position.coords.longitude;
+      //  $scope.mylat  = -6.922783191;
+       // $scope.mylng = 107.6081358;
+        $scope.mylocation = {
+          id: 0,
+          coords: {
+            latitude: $scope.mylat,
+            longitude: $scope.lng,
+          },
+          options: { draggable: false,
+            labelContent: "My Location",
+                labelAnchor: "20 0",
+                labelClass: "marker-labels",
+               icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(30, 44)},},
+        };
         $scope.map = {center: {latitude: $scope.mylat, longitude: $scope.mylng }, zoom: 14, bounds: {} };
         $scope.circle = 
         {
@@ -262,7 +328,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
         icon:{url: img, scaledSize: new google.maps.Size(30, 44) },
         events: {
             click: function () {
-              $state.go('app.location',{locationId:301});
+              $state.go('app.location',{locationId:scp[i].id});
             }
           },
       };
@@ -356,17 +422,46 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
 })
 
 
-.controller('CheckinCtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation) {
+.controller('CheckinCtrl', function($scope, $timeout, uiGmapGoogleMapApi, $state, $cordovaGeolocation, RestService) {
   
-  $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 15, bounds: {} };
+ // $scope.map = { center: { latitude: -6.924783191, longitude: 107.6091358}, zoom: 15, bounds: {} };
 
+  var rad = function(x) {
+    return x * Math.PI / 180;
+  };
 
+  var getDistance = function(p1, p2) {
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(p2.lat() - p1.lat());
+    var dLong = rad(p2.lng() - p1.lng());
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d; // returns the distance in meter
+  };
 
-    $scope.mylocation = {
+  $scope.loadLocations = function () {
+      RestService.locationList().then( function (data) {
+          $scope.locations = data;
+          $scope.countDistance();
+      }
+  )};
+
+  $cordovaGeolocation
+  .getCurrentPosition()
+  .then(function (position) {
+    var lat  = position.coords.latitude;
+    var lng = position.coords.longitude;
+    //var lat  = -6.924783191;
+    //var lng = 107.6091358;
+    $scope.map = {center: {latitude: lat, longitude: lng }, zoom: 15 };
+      $scope.mylocation = {
       id: 0,
       coords: {
-        latitude: -6.924783191,
-        longitude: 107.6091358
+        latitude: lat,
+        longitude: lng
       },
       options: { draggable: false,
         labelContent: "My Location",
@@ -375,18 +470,25 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
            icon: {url: "./img/marker.png" ,scaledSize: new google.maps.Size(30, 44)},},
     };
 
-    $cordovaGeolocation
-    .getCurrentPosition()
-    .then(function (position) {
-      //var lat  = position.coords.latitude;
-      //var lng = position.coords.longitude;
-      $scope.map = {center: {latitude: lat, longitude: lng }, zoom: 15 };
-      $scope.mylocation.coords.latitude = lat;
-      $scope.mylocation.coords.longitude = lng;
-    }, function(err) {
-      // error
-      alert('Error fetching position');
-    });
+     $scope.loadLocations();
+  }, function(err) {
+    // error
+    alert('Error fetching position');
+  });
+
+  
+
+  $scope.countDistance = function () {
+    var p2 = new google.maps.LatLng($scope.mylocation.coords.latitude, $scope.mylocation.coords.longitude);
+    for (var i = 0; i < $scope.locations.length; i++) { 
+        var p1 = new google.maps.LatLng($scope.locations[i].lat, $scope.locations[i].lng);
+        $scope.locations[i].distance =  Math.round(getDistance(p1, p2));
+        console.log($scope.locations[i].distance);
+    }
+  };
+
+ 
+  
 
 })
 
@@ -421,7 +523,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
   
 })
 
-.controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
+.controller('LoginCtrl2', function($scope, LoginService, $ionicPopup, $state) {
 
 
     $scope.data = {};
@@ -429,6 +531,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
     $scope.login = function() {
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
             $state.go('app.findPOI');
+
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
@@ -441,6 +544,28 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
       $state.go('app.findPOI');
     }
 
+})
+
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $stateParams) {
+  $scope.data = {};
+
+  $scope.guest = function() {
+      $state.go('app.findPOI');
+    }
+ 
+  $scope.login = function(data) {
+    AuthService.login($scope.data.username, $scope.data.password).then(function(authenticated) {
+      $state.go('app.findPOI', {}, {reload: true});
+
+      //$scope.setCurrentUsername($scope.data.username);
+
+    }, function(err) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Login failed!',
+        template: 'Please check your credentials!'
+      });
+    });
+  };
 })
 ;
 

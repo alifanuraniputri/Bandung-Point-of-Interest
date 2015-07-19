@@ -67,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
   $stateProvider
 
    .state('login', {
@@ -139,7 +139,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'menuContent': {
         templateUrl: "templates/history.html",
       }
-    }
+    },
+    data: {
+      authorizedRoles: [USER_ROLES.registered]
+    },
   })
 
   .state('app.about', {
@@ -159,6 +162,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'CheckinCtrl'
       }
     }
+    ,
+    data: {
+      authorizedRoles: [USER_ROLES.registered]
+    }
   })
 
   .state('app.rate', {
@@ -168,6 +175,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: "templates/rate.html",
         controller: 'RateCtrl'
       }
+    },
+    data: {
+      authorizedRoles: [USER_ROLES.registered]
     }
   })
 
@@ -202,4 +212,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
-});
+})
+
+
+.run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
+  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+ 
+    if ('data' in next && 'authorizedRoles' in next.data) {
+
+      var authorizedRoles = next.data.authorizedRoles;
+      if (!AuthService.isAuthorized(authorizedRoles)) {
+        event.preventDefault();
+        $state.go($state.current, {}, {reload: true});
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+      }
+    }
+    /*
+    if (!AuthService.isAuthenticated() ) {
+      if (next.name !== 'findPOI') {
+        event.preventDefault();
+        $state.go('login');
+      }
+    } */
+  });
+})
+;

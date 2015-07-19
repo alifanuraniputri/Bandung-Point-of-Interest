@@ -15,8 +15,9 @@
   <ion-side-menu side="left">
       <div class="item item-avatar profile-preview">
         <img class="profile-picture" src="img/user/guest.png">
-        <h2>Guest</h2>
-        <p><a style="text-decoration: none;"  class="link" href="#/login" href menu-close>Register</a></p>
+        <h2>{{user.name}}</h2>
+        <p><a style="text-decoration: none;"  class="link" ng-click="logout()" href="" ng-show="user.name!='Guest'" menu-close>Logout</a></p>
+        <p><a style="text-decoration: none;"  class="link" ng-click="login()" href="/#/login" ng-show="user.name=='Guest'" menu-close>Register</a></p>
     </div>
       <ion-list>
         <ion-item menu-close href="#/app/findPOI">
