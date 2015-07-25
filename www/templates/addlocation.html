@@ -1,0 +1,57 @@
+<ion-view view-title="CHECK IN & RATE">
+  <ion-content>
+    <div  class="map-content" data-tap-disabled="true">
+      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" id="small-map" bounds="map.bounds">
+
+          <ui-gmap-marker coords="mylocation.coords" options="mylocation.options" events="mylocation.events" idkey="mylocation.id">
+          </ui-gmap-marker>
+      </ui-gmap-google-map>
+    </div>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Location Name</span>
+        <input type="text" ng-model="name" placeholder="...">
+      </label>
+       <label class="item item-input item-stacked-label">
+        <span class="input-label">Description</span>
+        <input type="text" ng-model="des" placeholder="...">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Lat</span>
+        <input type="text" value="{{mylocation.coords.latitude}}" readonly>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Lat</span>
+        <input type="text" value="{{mylocation.coords.longitude}}" readonly>
+      </label>
+      <label class="item  item-stacked-label">
+        <div class="list">
+          <label class="item item-radio" >         
+            <input type="radio" name="group" ng-click="changeCid(300)" checked>
+            <div class="check-find item-content" ng-model="cid" ><img class="icon-find" src="img/park-only.png">  Park </div>
+            <i class="radio-icon ion-checkmark"></i>
+          </label>
+          <label class="item item-radio" >         
+            <input type="radio" name="group" ng-click="changeCid(3)">
+            <div class="check-find item-content" ng-model="cid"> <img class="icon-find" src="img/hospital-only.png"> Hospital </div>
+            <i class="radio-icon ion-checkmark"></i>
+          </label>
+           <label class="item item-radio" >         
+            <input type="radio" name="group" ng-click="changeCid(2)">
+            <div class="check-find item-content" ng-model="cid"  ><img class="icon-find" src="img/mosque-only.png">  Mosque  </div>
+            <i class="radio-icon ion-checkmark"></i>
+          </label>
+        </div>
+      </label>
+      <div class="checkin-page">
+        <button class="button button-block button-positive" ng-click="add(cid,name,des,mylocation.coords.latitude,mylocation.coords.longitude)">
+          Add new location
+        </button> 
+      </div>
+    </div>
+
+  
+  </ion-content>
+</ion-view>
+
+

@@ -168,6 +168,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('app.addLocation', {
+    url: "/add",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/addlocation.html",
+        controller: 'AddLocationCtrl'
+      }
+    }
+    ,
+    data: {
+      authorizedRoles: [USER_ROLES.registered]
+    }
+  })
+
   .state('app.rate', {
     url: "/rate/:locationId",
     views: {

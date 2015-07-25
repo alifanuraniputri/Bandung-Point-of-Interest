@@ -33,8 +33,8 @@ angular.module('starter.services', [])
 })
 
 .factory('RestService', function($http,$q, ConnService, $rootScope) {
-    var REST_URL = 'http://192.168.43.116:8080/bandung-poi-api/';
-    //var REST_URL = 'http://localhost:8080/bandung-poi-api/';
+    //var REST_URL = 'http://192.168.43.116:8080/bandung-poi-api/';
+    var REST_URL = 'http://localhost:8080/bandung-poi-api/';
     var URL = {
                'LOCATION_LIST' : REST_URL + 'location/list',
                'LOCATION_GET' : REST_URL + 'location/',
@@ -48,6 +48,7 @@ angular.module('starter.services', [])
                'LOGIN' : REST_URL + 'user/validate',
                'CHECKIN' : REST_URL + 'checkin/add',
                'RATING' : REST_URL + 'rating/add',
+               'LOCATION_ADD' : REST_URL + 'location/add',
             };
     return {
         locationList : function() {
@@ -86,6 +87,10 @@ angular.module('starter.services', [])
         rating : function(usr,loc,c1,c2,c3,c4,c5,ov) {
             return ConnService.processPromise($http.post(URL['RATING']+'?userId='+usr+'&locationId='+loc+'&criteria1='+c1
               +'&criteria2='+c2+'&criteria3='+c3+'&criteria4='+c4+'&criteria5='+c5+'&overall='+ov));
+        },
+        locationAdd : function(cid,name,des,lat,lng) {
+            return ConnService.processPromise($http.post(URL['LOCATION_ADD']+'?categoryId='+cid+'&name='+name+'&description='+des+'&lat='
+              +lat+'&lng='+lng));
         },
     };
 })
