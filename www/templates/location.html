@@ -22,23 +22,43 @@
           <button class="button button-calm button-outline">{{location.rate}}</button>
           <p>&nbsp; &nbsp; #{{rank.rateRank}} best from {{rank.total}} {{location.category.name}} </p>
           <div class="row">
-            <div class="col"> <p> Keramaian </p></div>
+            <div class="col"> 
+              <p ng-show="location.category.id==300"> Keramaian </p>
+              <p ng-show="location.category.id==2"> Ketersediaan air </p>
+              <p ng-show="location.category.id==3"> Luas Bangunan </p>
+            </div>
             <div class="col"> <div star-rating ng-if="location.criteria1" ng-model="location.criteria1" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
           </div>
           <div class="row">
-            <div class="col"> <p> Kebersihan </p></div>
+            <div class="col"> 
+              <p ng-show="location.category.id==300"> Kebersihan </p>
+              <p ng-show="location.category.id==2"> Kebersihan</p>
+              <p ng-show="location.category.id==3"> Kebersihan </p>
+            </div>
             <div class="col"> <div star-rating ng-if="location.criteria2" ng-model="location.criteria2" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
           </div>
           <div class="row">
-            <div class="col"> <p> Fasilitas </p></div>
+            <div class="col"> 
+              <p ng-show="location.category.id==300"> Fasilitas </p>
+              <p ng-show="location.category.id==2"> Alat sholat</p>
+              <p ng-show="location.category.id==3"> Pelayanan cepat </p>
+            </div>
             <div class="col"> <div star-rating ng-if="location.criteria3" ng-model="location.criteria3" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
           </div>
           <div class="row">
-            <div class="col"> <p> Wifi </p></div>
+            <div class="col"> 
+              <p ng-show="location.category.id==300"> Wifi </p>
+              <p ng-show="location.category.id==2"> Toilet</p>
+              <p ng-show="location.category.id==3"> BPJS </p>
+            </div>
             <div class="col"> <div star-rating ng-if="location.criteria4" ng-model="location.criteria4" readonly="isReadonly" max="5" on-rating-selected=""></div> </div>
           </div>
           <div class="row">
-            <div class="col"> <p> Untuk Anak </p></div>
+            <div class="col"> 
+              <p ng-show="location.category.id==300"> Untuk anak </p>
+              <p ng-show="location.category.id==2"> Luas memadai</p>
+              <p ng-show="location.category.id==3"> Harga terjangkau </p>
+            </div>
             <div class="col"> <div star-rating ng-if="location.criteria5" ng-model="location.criteria5" readonly="isReadonly" max="5" on-rating-selected=""></div></star-rating> </div>
           </div>
           

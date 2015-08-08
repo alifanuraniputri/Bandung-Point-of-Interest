@@ -33,8 +33,9 @@ angular.module('starter.services', [])
 })
 
 .factory('RestService', function($http,$q, ConnService, $rootScope) {
-    //var REST_URL = 'http://192.168.43.116:8080/bandung-poi-api/';
-    var REST_URL = 'http://localhost:8080/bandung-poi-api/';
+    var REST_URL = 'http://192.168.43.116:8080/bandung-poi-api/';
+    //var REST_URL = 'http://192.168.1.103:8080/bandung-poi-api/';
+    //var REST_URL = 'http://localhost:8080/bandung-poi-api/';
     var URL = {
                'LOCATION_LIST' : REST_URL + 'location/list',
                'LOCATION_GET' : REST_URL + 'location/',

@@ -7,19 +7,13 @@
           </ui-gmap-marker>
       </ui-gmap-google-map>
     </div>
-    <div class="list ">
+
       <label class="item ">
         <button class="button button-full icon-left button-positive" ng-click="add()">
            <i class="icon ion-plus"> </i>&nbsp;  Add new location
         </button>
       </label>
-    </div>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search">
-      </label>
-    </div>
+
     <div ng-repeat="location in locations | orderBy:'distance'">
       <a class="item item-icon-left" href="#/app/rate/{{location.id}}">
         <h2> <i class="icon ion-ios-location"></i> {{location.name}}</h2>

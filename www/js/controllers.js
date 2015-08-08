@@ -95,7 +95,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
             $ionicHistory.nextViewOptions({
               disableBack: true
             });
-            $state.go('app.history', {}, {reload: true});
+            $state.go('app.findPOI', {}, {reload: true});
            });
         } else {
           var alertPopup = $ionicPopup.alert({
@@ -123,7 +123,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
             $ionicHistory.nextViewOptions({
               disableBack: true
             });
-            $state.go('app.history');
+            $state.go('app.findPOI');
            });
         } else {
           var alertPopup = $ionicPopup.alert({
@@ -255,10 +255,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function (position) {
-    //  $scope.mylat  = position.coords.latitude;
-     // $scope.mylng = position.coords.longitude;
-        $scope.mylat  = -6.922783191;
-        $scope.mylng = 107.6081358;
+     $scope.mylat  = position.coords.latitude;
+     $scope.mylng = position.coords.longitude;
+     //   $scope.mylat  = -6.922783191;
+       // $scope.mylng = 107.6081358;
         $scope.mylocation = {
           id: 0,
           coords: {
@@ -452,10 +452,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps', 'ngCordova'])
   $cordovaGeolocation
   .getCurrentPosition()
   .then(function (position) {
-  //  var lat  = position.coords.latitude;
-    //var lng = position.coords.longitude;
-    var lat  = -6.924783191;
-    var lng = 107.6091358;
+    var lat  = position.coords.latitude;
+  var lng = position.coords.longitude;
+    //var lat  = -6.924783191;
+   // var lng = 107.6091358;
     $scope.map = {center: {latitude: lat, longitude: lng }, zoom: 15 };
       $scope.mylocation = {
       id: 0,

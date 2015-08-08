@@ -84,6 +84,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('app.findPOI', {
+    cache: false,
     url: "/findPOI",
     views: {
       'menuContent': {
@@ -155,6 +156,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('app.checkin', {
+    cache: false,
     url: "/checkin",
     views: {
       'menuContent': {
